@@ -1,4 +1,4 @@
-/* 장유중앙교회 대림절 달력 — 동작 (글은 cards.js 에 있습니다) */
+/* 주님 오심을 기다리며 · 장유중앙교회 대림절 묵상 — 동작 (글은 cards.js 에 있습니다) */
 (function () {
   'use strict';
 
@@ -9,7 +9,7 @@
   var brand = document.getElementById('brand');
 
   if (!D || !D.cards || !D.cards.length) {
-    home.innerHTML = '<p class="fatal">달력 글을 불러오지 못했습니다.<br>잠시 뒤 다시 열어 주세요.</p>';
+    home.innerHTML = '<p class="fatal">묵상 글을 불러오지 못했습니다.<br>잠시 뒤 다시 열어 주세요.</p>';
     return;
   }
 
@@ -118,14 +118,14 @@
     if (inApp) {
       return '<section class="install" aria-label="설치 안내">' + head +
         '<h2>먼저 인터넷 앱으로 열어 주세요</h2>' +
-        '<p>' + (isKakao ? '카카오톡' : '이 앱') + ' 안에서는 홈 화면에 설치할 수 없습니다. ' + (isIOS ? '사파리' : '크롬') + '로 열면 설치할 수 있습니다.</p>' +
-        '<button type="button" class="btn gold" data-act="open-external">' + (isIOS ? '사파리' : '크롬') + '로 열기</button>' +
+        '<p>' + (isKakao ? '카카오톡' : '이 앱') + ' 안에서는 홈 화면에 설치할 수 없습니다. ' + (isIOS ? '사파리로' : '크롬으로') + ' 열면 설치할 수 있습니다.</p>' +
+        '<button type="button" class="btn gold" data-act="open-external">' + (isIOS ? '사파리로' : '크롬으로') + ' 열기</button>' +
         '<p class="hint">버튼이 안 되면, 화면 ' + (isIOS ? '아래쪽 공유 버튼' : '오른쪽 위 ⋮ 버튼') + '을 누르고 "다른 브라우저로 열기"를 고르세요.</p>' +
         later + '</section>';
     }
     if (isIOS) {
       return '<section class="install" aria-label="설치 안내">' + head +
-        '<h2>홈 화면에 달력을 놓아 두세요</h2><p>' + why + '</p>' +
+        '<h2>홈 화면에 대림절 묵상을 놓아 두세요</h2><p>' + why + '</p>' +
         '<ol class="steps">' +
         '<li>' + PIC.share + '<div><b>1. 공유 버튼을 누릅니다</b><small>화면 아래(또는 위)의 네모에 화살표 모양. 안 보이면 ⋯ 를 먼저 누르세요.</small></div></li>' +
         '<li>' + PIC.add + '<div><b>2. "홈 화면에 추가"를 누릅니다</b><small>목록을 아래로 조금 내리면 보입니다.</small></div></li>' +
@@ -134,7 +134,7 @@
     }
     if (isAndroid || deferredPrompt) {
       return '<section class="install" aria-label="설치 안내">' + head +
-        '<h2>홈 화면에 달력을 놓아 두세요</h2><p>' + why + '</p>' +
+        '<h2>홈 화면에 대림절 묵상을 놓아 두세요</h2><p>' + why + '</p>' +
         '<button type="button" class="btn gold" data-act="install">홈 화면에 설치하기</button>' +
         (androidHelp ? '<ol class="steps"><li>' + PIC.menu + '<div><b>오른쪽 위 ⋮ 를 누르고<br>"홈 화면에 추가"를 누릅니다</b><small>"앱 설치"라고 나오기도 합니다.</small></div></li></ol>' : '') +
         later + '</section>';
@@ -179,16 +179,16 @@
         '<p class="eyebrow">' + (xmas ? '성탄절' : '대림절 ' + ORD[a.no - 1] + ' 주 · ' + esc(a.candle || '')) + '</p>' +
         '<h1 class="serif">' + mdLong(t) + ' ' + WD[wday(t)] + '</h1>' +
         '<p class="lead">' + (xmas ? '기다리던 주님이 오셨습니다. 네 개의 초가 모두 켜졌습니다.' : esc(a.candleText || '')) + '</p>' +
-        enterBtn(opened ? '달력으로 들어가기' : '오늘의 칸 열기');
+        enterBtn(opened ? '묵상으로 들어가기' : '오늘의 칸 열기');
       var j = count('joined');
       if (j > 0) h += '<p class="together"><b>' + j + '일째</b> 함께하고 있어요</p>';
     } else {
       h += candleFig(4) + '<p class="eyebrow">' + esc(D.subtitle || '') + ' · 2026</p><h1 class="serif">성탄을 축하합니다</h1>' +
-        '<p class="lead">스물일곱 칸을 모두 다시 볼 수 있습니다.</p>' + enterBtn('달력 다시 보기');
+        '<p class="lead">스물일곱 칸을 모두 다시 볼 수 있습니다.</p>' + enterBtn('묵상 다시 보기');
     }
     h += '</section><div id="installSlot"></div>';
     h += '<footer class="foot">' +
-      '<button type="button" class="btn line" data-act="share-app">이 달력 알려 주기</button>' +
+      '<button type="button" class="btn line" data-act="share-app">대림절 묵상 앱 알리기</button>' +
       '<button type="button" class="link" id="installLink" data-act="install-show">홈 화면에 설치하는 방법</button>' +
       '<p>' + esc(D.church) + ' · 2026 대림절</p></footer>';
     home.innerHTML = h;
@@ -298,7 +298,7 @@
       '<section class="box prayer"><h3>짧은 기도</h3><p class="serif">' + esc(c.prayer) + '</p></section>' +
       '<div class="c-actions">' +
       '<button type="button" class="btn" data-act="share-card" data-date="' + c.date + '">이 칸 보내기 (카카오톡 등)</button>' +
-      '<button type="button" class="btn line" data-act="back">달력으로 돌아가기</button></div>' +
+      '<button type="button" class="btn line" data-act="back">묵상 목록으로</button></div>' +
       '<div class="c-nav">' +
       (prev && unlocked(prev.date, t) ? '<button type="button" data-open="' + prev.date + '" data-replace="1">‹ 어제 칸 · ' + esc(prev.name) + '</button>' : '<span></span>') +
       (next && unlocked(next.date, t) ? '<button type="button" data-open="' + next.date + '" data-replace="1">' + esc(next.name) + ' · 다음 칸 ›</button>' : '<span></span>') +
@@ -351,7 +351,7 @@
         document.body.classList.remove('reading');
       }
       backBtn.hidden = r.v === 'cover'; brand.hidden = r.v !== 'cover';
-      backBtn.textContent = r.v === 'card' ? '← 달력' : '← 처음';
+      backBtn.textContent = r.v === 'card' ? '← 목록' : '← 처음';
       view = r;
       window.scrollTo(0, 0);
     }
@@ -404,7 +404,7 @@
       mark('done', date, on);
       el.setAttribute('aria-pressed', String(on));
       el.querySelector('.lbl').textContent = on ? '했어요' : '오늘 했어요';
-      if (on) toast('잘하셨습니다. 달력에 표시해 두었어요');
+      if (on) toast('잘하셨습니다. 표시해 두었어요');
       return;
     }
     if (act === 'share-card') {
