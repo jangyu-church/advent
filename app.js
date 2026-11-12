@@ -441,6 +441,13 @@
   route();
 
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-    window.addEventListener('load', function () { navigator.serviceWorker.register('./sw.js').catch(function () {}); });
+    // 새 버전이 올라오면 화면을 한 번 자동으로 새로 연다 (처음 설치할 때는 제외)
+    var hadSW = !!navigator.serviceWorker.controller, reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadSW || reloaded) return; reloaded = true; location.reload();
+    });
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').then(function (reg) { if (reg && reg.update) reg.update(); }).catch(function () {});
+    });
   }
 })();

@@ -1,6 +1,6 @@
 /* 오프라인에서도 열리게 해 주는 파일입니다.
    인터넷이 되면 항상 새 내용을 먼저 받아 오므로, 글만 고쳤을 때는 이 파일을 건드리지 않아도 됩니다. */
-const VERSION = 'advent-2026-v5';
+const VERSION = 'advent-2026-v6';
 const ASSETS = [
   './', './index.html', './style.css', './app.js', './cards.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png',
@@ -10,7 +10,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(ASSETS.map((u) => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (e) => {
@@ -32,7 +32,8 @@ self.addEventListener('fetch', (e) => {
   e.respondWith((async () => {
     const cache = await caches.open(VERSION);
     const fromCache = () => cache.match(cacheKey, { ignoreSearch: true });
-    const fromNet = fetch(req).then((res) => {
+    // 브라우저에 남아 있는 옛 파일을 쓰지 않도록, 항상 서버에 새 파일이 있는지 물어본다
+    const fromNet = fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }).then((res) => {
       if (res && res.ok) cache.put(cacheKey, res.clone()).catch(() => {});
       return res;
     });
