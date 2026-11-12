@@ -1,6 +1,6 @@
 /* 오프라인에서도 열리게 해 주는 파일입니다.
    인터넷이 되면 항상 새 내용을 먼저 받아 오므로, 글만 고쳤을 때는 이 파일을 건드리지 않아도 됩니다. */
-const VERSION = 'advent-2026-v8';
+const VERSION = 'advent-2026-v9';
 const ASSETS = [
   './', './index.html', './style.css', './app.js', './cards.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png',
@@ -16,7 +16,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k.indexOf('advent-') === 0 && k !== VERSION).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
